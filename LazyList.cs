@@ -19,16 +19,16 @@ namespace LazyList
 
 		public LazyList<T> Rest { get { return _rest.Value; } }
 
-		public static LazyList<U> Iterate<U>(Func<U, U> f, U x)
+		public static LazyList<U> Iterate<U>(U x, Func<U, U> f)
 		{
 //			return new LazyList<U>(x, new Lazy<LazyList<U>>(delegate
 //					{
 //						return Iterate(f, f(x));
 //					}));
 
-			return new LazyList<U>(x, 
+			return new LazyList<U>(x,
 				new Lazy<LazyList<U>>(
-					() => Iterate(f, f(x))));
+					() => Iterate(f(x), f)));
 		}
 
 		public static LazyList<U> Repeat<U>(U x)
@@ -38,7 +38,7 @@ namespace LazyList
 //						return Repeat(x);
 //					}));
 
-			return new LazyList<U>(x, 
+			return new LazyList<U>(x,
 				new Lazy<LazyList<U>>(
 					() => Repeat(x)));
 		}
@@ -62,4 +62,3 @@ namespace LazyList
 		#endregion
 	}
 }
-

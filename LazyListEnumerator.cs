@@ -58,4 +58,3 @@ namespace LazyList
 		#endregion
 	}
 }
-
