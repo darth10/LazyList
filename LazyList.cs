@@ -21,32 +21,44 @@ namespace LazyList
 
 		public static LazyList<U> Iterate<U>(Func<U, U> f, U x)
 		{
-			return new LazyList<U>(x, new Lazy<LazyList<U>>(delegate
-				{
-					return Iterate(f, f(x));
-				}));
+//			return new LazyList<U>(x, new Lazy<LazyList<U>>(delegate
+//					{
+//						return Iterate(f, f(x));
+//					}));
+
+			return new LazyList<U>(x, 
+				new Lazy<LazyList<U>>(
+					() => Iterate(f, f(x))));
 		}
 
 		public static LazyList<U> Repeat<U>(U x)
 		{
-			return new LazyList<U>(x, new Lazy<LazyList<U>>(delegate
-				{
-					return Repeat(x);
-				}));
+//			return new LazyList<U>(x, new Lazy<LazyList<U>>(delegate
+//					{
+//						return Repeat(x);
+//					}));
+
+			return new LazyList<U>(x, 
+				new Lazy<LazyList<U>>(
+					() => Repeat(x)));
 		}
 
 		#region IEnumerable[T] implementation
+
 		IEnumerator<T> IEnumerable<T>.GetEnumerator()
 		{
 			return new LazyListEnumerator<T>(this);
 		}
+
 		#endregion
 
 		#region IEnumerable implementation
+
 		IEnumerator IEnumerable.GetEnumerator()
 		{
 			return new LazyListEnumerator<T>(this);
 		}
+
 		#endregion
 	}
 }

@@ -8,15 +8,17 @@ namespace LazyList
 	{
 		LazyList<T> _next, _curr = null;
 
-		public LazyListEnumerator (LazyList<T> parent)
+		public LazyListEnumerator(LazyList<T> parent)
 		{
 			_next = parent;
 		}
 
-		T Current {
-			get {
+		T Current
+		{
+			get
+			{
 				if (_curr == null)
-					throw new InvalidOperationException ();
+					throw new InvalidOperationException();
 
 				return _curr.First;
 			}
@@ -30,7 +32,7 @@ namespace LazyList
 
 		#region IEnumerator implementation
 
-		bool IEnumerator.MoveNext ()
+		bool IEnumerator.MoveNext()
 		{
 			_curr = _next;
 			_next = _next.Rest;
@@ -38,9 +40,9 @@ namespace LazyList
 			return _curr != null;
 		}
 
-		void IEnumerator.Reset ()
+		void IEnumerator.Reset()
 		{
-			throw new NotSupportedException ("Cannot reset a LazyList");
+			throw new NotSupportedException("Cannot reset a LazyList");
 		}
 
 		object IEnumerator.Current { get { return Current; } }
@@ -49,13 +51,11 @@ namespace LazyList
 
 		#region IDisposable implementation
 
-		void System.IDisposable.Dispose ()
+		void System.IDisposable.Dispose()
 		{
 		}
 
 		#endregion
 	}
-
-
 }
 
